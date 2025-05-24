@@ -2,8 +2,8 @@ name: Odoo package build and release
 
 on:
   push:
-    branches:
-      - feature-*
+    tags:
+      - *
 
 env:
   REGISTRY_HOST: ${{ gitea.registry_host }}
@@ -16,8 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-      - name: Prep
+          fetch-depth: 1
+      - name: Apt Proxy Set
         run: echo "Acquire::http { Proxy \"${{ vars.APT_CACHER_NG }}\"; }" | tee /etc/apt/apt.conf.d/proxy
       - name: Refresh
         run: apt-get update
@@ -27,7 +27,7 @@ jobs:
         run: ./debian/rules binary > /tmp/build.log 2>&1
       - name: Log tail
         run: tail -50 /tmp/build.log
-      - name: examine
+      - name: File Size
         run: ls -l ..
       - name: Odoo Release
         id: release-action
