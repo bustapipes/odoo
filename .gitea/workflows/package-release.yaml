@@ -31,7 +31,7 @@ jobs:
         run: ls -l ..
       - name: Odoo Release
         id: release-action
-        uses: https://gitea.com/actions/release-action@main
+        uses: https://gitea.otbm.xyz/actions/release-action@master
         with:
           files: |-
             ../*.deb
