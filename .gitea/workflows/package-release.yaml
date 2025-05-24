@@ -22,7 +22,7 @@ jobs:
       - name: Refresh
         run: apt-get update
       - name: Tool Up
-        run: apt-get install -y debhelper dh-python
+        run: apt-get install -y debhelper dh-python golang-go
       - name: Build
         run: ./debian/rules binary > /tmp/build.log 2>&1
       - name: Log tail
