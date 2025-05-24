@@ -13,7 +13,8 @@ env:
 
 jobs:
   build-debs:
-    runs-on: ${{ vars.REGISTRY_HOST }}/${{ gitea.repository_owner }}/bullseye-odoo15-base
+    #runs-on: ${{ vars.REGISTRY_HOST }}/${{ gitea.repository_owner }}/bullseye-odoo15-base
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
