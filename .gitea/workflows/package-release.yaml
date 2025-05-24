@@ -24,7 +24,9 @@ jobs:
       - name: Tool Up
         run: apt-get install -y debhelper dh-python
       - name: Build
-        run: ./debian/rules binary
+        run: ./debian/rules binary > /tmp/build.log 2>&1
+      - name: Log tail
+        run: tail -50 /tmp/build.log
       - name: examine
         run: ls -l ..
       - name: Odoo Release
