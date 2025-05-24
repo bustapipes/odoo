@@ -1,4 +1,4 @@
-name: Odoo OCI build and push
+name: Odoo package build and release
 
 on:
   push:
@@ -16,12 +16,17 @@ jobs:
     runs-on: ${{ vars.REGISTRY_HOST }}/${{ gitea.repository_owner }}/bullseye-odoo15-base
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: jtdor/build-deb-action@v1
         env:
           DEB_BUILD_OPTIONS: noautodbgsym
         with:
           buildpackage-opts: --build=binary --no-sign
-      - uses: actions/upload-artifact@v4
+      - name: Odoo Release
+        id: release-action
+        uses: https://gitea.com/actions/release-action@main
         with:
-          name: odoo-deb
-          path: debian/*.deb
+          files: |-
+            debian/*.deb
+          api_key: '${{secrets.PAT}}'
