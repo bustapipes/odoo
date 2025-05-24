@@ -17,12 +17,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Prep
+        run: apt intall -y dh-python
       - name: Build
-        run:
-          - apt intall -y dh-python
-          - ./debian/rules binary
+        run: ./debian/rules binary
       - name: examine
-        run: ls -lR debian
+        run: ls -l ..
       - name: Odoo Release
         id: release-action
         uses: https://gitea.com/actions/release-action@main
