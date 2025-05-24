@@ -22,7 +22,7 @@ jobs:
       - name: Refresh
         run: apt-get update
       - name: Tool Up
-        run: apt-get install -y dh-python
+        run: apt-get install -y debhelper dh-python
       - name: Build
         run: ./debian/rules binary
       - name: examine
