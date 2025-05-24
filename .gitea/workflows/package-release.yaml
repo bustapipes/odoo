@@ -1,0 +1,27 @@
+name: Odoo OCI build and push
+
+on:
+  push:
+    branches:
+      - feature-*
+
+env:
+  REGISTRY_HOST: ${{ gitea.registry_host }}
+  REGISTRY_USERNAME: ${{ gitea.repository_owner }}
+  REGISTRY_PASSWORD: ${{ secrets.PAT }}
+  #APT_CACHER_NG: ${{ vars.APT_CACHER_NG }}
+
+jobs:
+  build-debs:
+    runs-on: ${{ vars.REGISTRY_HOST }}/${{ gitea.repository_owner }}/bullseye-odoo15-base
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jtdor/build-deb-action@v1
+        env:
+          DEB_BUILD_OPTIONS: noautodbgsym
+        with:
+          buildpackage-opts: --build=binary --no-sign
+      - uses: actions/upload-artifact@v4
+        with:
+          name: odoo-deb
+          path: debian/*.deb
