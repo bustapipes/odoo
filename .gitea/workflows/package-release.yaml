@@ -18,7 +18,11 @@ jobs:
         with:
           fetch-depth: 0
       - name: Prep
-        run: apt intall -y dh-python
+        run: echo "Acquire::http { Proxy \"${{ vars.APT_CACHER_NG }}\"; }" | tee /etc/apt/apt.conf.d/proxy
+      - name: Refresh
+        run: apt-get update
+      - name: Tool Up
+        run: apt-get install -y dh-python
       - name: Build
         run: ./debian/rules binary
       - name: examine
