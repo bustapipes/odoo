@@ -19,11 +19,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: jtdor/build-deb-action@v1
-        env:
-          DEB_BUILD_OPTIONS: noautodbgsym
-        with:
-          buildpackage-opts: --build=binary --no-sign
+  #   - uses: jtdor/build-deb-action@v1
+  #     env:
+  #       DEB_BUILD_OPTIONS: noautodbgsym
+  #     with:
+  #       buildpackage-opts: --build=binary --no-sign
+      - name: Build
+        run: ./debian/rules build
+      - name: examine
+        run: ls -lR debian
       - name: Odoo Release
         id: release-action
         uses: https://gitea.com/actions/release-action@main
